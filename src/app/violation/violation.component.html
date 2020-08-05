@@ -1,0 +1,56 @@
+<!-- Success alert -->
+<div
+  class="alert alert-success alert-dismissible"
+  *ngIf="(noEvent || eventList.length == 0) && organizations.length !== 0"
+>
+  <button id="closeFlashS" type="button" class="close" data-dismiss="alert">
+    &times;
+  </button>
+  <strong>No Violation Found ! </strong>
+</div>
+<!-- Failure alert -->
+<div
+  class="alert alert-danger alert-dismissible"
+  *ngIf="!noEvent && eventList.length !== 0"
+>
+  <button id="closeFlashS" type="button" class="close" data-dismiss="alert">
+    &times;
+  </button>
+  <strong>{{ eventList.length }}</strong>
+  Violation<span *ngIf="eventList.length > 1">s</span> Found !
+</div>
+<div class="row" style="margin: 0;">
+  <label for="events">Choose Organization</label>
+  <select id="events" (change)="changeOrganization($event)">
+    <option *ngFor="let orgs of organizations" [value]="orgs.name">
+      {{ orgs.name }}
+    </option>
+  </select>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Organization</th>
+        <th>Violating Repository</th>
+        <th>Event Type</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngIf="!noEvent">
+        <tr *ngFor="let repo of eventList">
+          <td>{{ repo.org.login }}</td>
+          <td>{{ repo.repo.name }}</td>
+          <td>{{ repo.type }}</td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+  <div class="nodData" *ngIf="organizations.length == 0">
+    No Organizations
+  </div>
+  <div
+    class="nodData"
+    *ngIf="organizations.length !== 0 && noEvent && this.eventList.length === 0"
+  >
+    No Events
+  </div>
+</div>

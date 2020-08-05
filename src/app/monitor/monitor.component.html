@@ -1,0 +1,41 @@
+<button
+  class="btn btn-primary"
+  style="margin-bottom: 20px;"
+  (click)="goToHome()"
+>
+  Home
+</button>
+<div class="row">
+  <label for="organization">Choose Organization</label>
+  <select id="organization" (change)="changeOrganization($event)">
+    <option *ngFor="let orgs of organizations" [value]="orgs.name">
+      {{ orgs.name }}
+    </option>
+  </select>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Repository Name</th>
+        <th>Private</th>
+        <th>Repository URL</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngIf="!noRepo">
+        <tr *ngFor="let repo of repoList">
+          <td>{{ repo.name }}</td>
+          <td [ngClass]="{ isPrivate: repo.private }">{{ repo.private }}</td>
+          <td>
+            <a href="{{ repo.repo_url }}">{{ repo.url }}</a>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+  <div class="nodData" *ngIf="organizations.length == 0">
+    No Organizations
+  </div>
+  <div class="nodData" *ngIf="organizations.length !== 0 && noRepo">
+    No Repositories
+  </div>
+</div>

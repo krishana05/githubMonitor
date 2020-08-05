@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="col-xl-6">
+    <div class="row">
+      <input
+        type="text"
+        class="col-xl-6 form-control"
+        placeholder="Enter Organization Name"
+        [(ngModel)]="organization"
+      />
+      <button
+        class="offset-xl-1 col-xl-4 btn btn-primary"
+        (click)="addOrganization()"
+      >
+        Add Organization
+      </button>
+    </div>
+    <div class="row" style="min-height: 350px;">
+      <table class="col-xl-11 table">
+        <thead>
+          <tr>
+            <th>Registered Organization</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let org of organizations">
+            <td>{{ org.name }}</td>
+          </tr>
+          <tr *ngIf="organizations.length == 0">
+            <td>No Organizations</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <button
+      class="offset-xl-6 col-xl-5 btn btn-primary"
+      (click)="goToViolations()"
+    >
+      Monitor All Organizations
+    </button>
+  </div>
+  <div class="col-xl-6">
+    <app-violation [organizations]="organizations"></app-violation>
+  </div>
+</div>
